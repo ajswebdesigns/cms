@@ -1,4 +1,3 @@
-       <!-- Header -->
 <?php include('includes/admin_header.php') ?>
     <div id="wrapper">
         <!-- Navigation -->
@@ -40,10 +39,7 @@
                       </div>
                       <!-- add category form -->
                         <div class="col-xs-6">
-                <?php
-                $query = "SELECT * FROM categories";
-                $select_categories = mysqli_query($connection, $query);
-                ?>
+     
                         <table class="table table-bordered table-hover">
                           <thead>
                             <tr>
@@ -52,7 +48,23 @@
                             </tr>
                           </thead>
                           <tbody>
+      <?php //delete Query
+      if(isset($_GET['delete'])){
+        $the_cat_id = $_GET['delete'];
+        $query = "DELETE FROM categories WHERE cat_id = {$the_cat_id}";
+        $delete_query = mysqli_query($connection, $query);
+        // refresh page after delete
+        header("Location: http://localhost:8888/admin/categories.php");
+       
+
+      }
+      ?>                
+    <!--Find All Categories Query   -->
      <?php
+      $query = "SELECT * FROM categories";
+      $select_categories = mysqli_query($connection, $query);
+                
+      //display categories Query 
        while($row = mysqli_fetch_assoc($select_categories)){
       // var_dump($row);
       $cat_id = $row['cat_id']; 
@@ -60,9 +72,14 @@
       echo "<tr>" ;
       echo "<td>  $cat_id</td>";
       echo "<td>  $cat_title</td>";
+      echo "<td> <a href='categories.php/?delete={$cat_id}'>Delete</a></td>";
       echo "</tr>" ;
         }
       ?>
+
+  
+
+    
                           </tbody>
                         </table>
                       </div>
