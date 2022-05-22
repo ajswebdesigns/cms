@@ -1,4 +1,12 @@
 <?php
+
+function confirmQuery($result){
+  global $connection;
+  if(!$result){
+  die("Query Failed! ".  mysqli_error($connection));
+  
+}
+}
 // Add New Category Query
 function insert_categories()
 {
@@ -59,3 +67,6 @@ function updateCategories()
     include('./includes/update_categories.php');
   }
 }
+
+
+
