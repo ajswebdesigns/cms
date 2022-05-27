@@ -17,14 +17,20 @@
             $select_all_posts_query = mysqli_query($connection, $query);
                 while($row = mysqli_fetch_assoc($select_all_posts_query)){
                 // var_dump($row);
-                    $post_id = $row['post_id']; 
+                   $post_id = $row['post_id']; 
                    $post_title = $row['post_title']; 
                    $post_author = $row['post_author']; 
                    $post_date = $row['post_date']; 
                    $post_image = $row['post_image']; 
                    $post_content = substr($row['post_content'],0, 350); 
-                    ?>
+                   $post_status = $row['post_status']; 
+                   if($post_status !== 'published'){
+                        echo '<h1>Sorry No Posts</h1>';
+                   } else {
 
+                   
+                    ?>
+                    
 
                     <h1 class="page-header">
                     Page Heading
@@ -48,9 +54,7 @@
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
-                <?php }
-             
-            ?>
+                <?php } } ?>
 
             </div>
 

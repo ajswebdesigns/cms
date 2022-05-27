@@ -22,7 +22,7 @@ if($day) {
 } else {
   echo 'idk';
 }
-
+$name = 'Andrew';
 
 // foreach($days as $key=> $day){
 //   echo $key. ' ' .$day. '<br>';
