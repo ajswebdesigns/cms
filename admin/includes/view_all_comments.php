@@ -44,26 +44,40 @@
             // }
             // echo "<td>$cat_title</td>";
 
-            echo "<td>$comment_email</td>";
-            echo "<td>$comment_status </td>";
-
-            $query = "SELECT * FROM posts WHERE post_id = {$comment_post_id}";
-            $select_post_id_query = mysqli_query($connection, $query);
-            while($row = mysqli_fetch_assoc($select_post_id_query)){
-              $post_id = $row['post_id'];
-              $post_title = $row['post_title'];
-              echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
-             
-            }
-
+    
+        echo "<td>$comment_email</td>";
+        echo "<td>$comment_status</td>";
+        
+        
+        $query = "SELECT * FROM posts WHERE post_id = $comment_post_id ";
+        $select_post_id_query = mysqli_query($connection,$query);
+        while($row = mysqli_fetch_assoc($select_post_id_query)){
+        $post_id = $row['post_id'];
+        $post_title = $row['post_title'];
             
-            echo "<td>$comment_date</td>";
-            echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
-            echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
-            echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
-            echo "</tr>";
-          }
-          ?>
+            echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
+        
+        
+        }
+        
+        
+
+        
+        echo "<td>$comment_date</td>";
+        echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
+        echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
+        echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
+        echo "</tr>";
+   
+    }
+
+
+
+
+      ?>
+
+
+
 
             </tbody>
           </table>

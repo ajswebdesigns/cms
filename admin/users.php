@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-lg-12">
           <h1 class="page-header">
-            Welcome to admin
+            Welcome to admin comment
             <small>Author</small>
           </h1>
           <?php
@@ -19,12 +19,12 @@
           }
 
           switch ($source) {
-            case 'add_post':
-              include "includes/add_post.php";
+            case 'edit_user':
+              include "includes/edit_user.php";
               break;
 
-            case 'edit_post':
-              include "includes/edit_post.php";
+            case 'add_user':
+              include "includes/add_user.php";
               break;
 
             case '300':
@@ -32,9 +32,9 @@
               break;
 
             default:
-              include "includes/view_all_posts.php";
+              include "includes/view_all_users.php";
           }
-
+          
           ?>
         </div>
       </div>

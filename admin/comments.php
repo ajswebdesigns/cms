@@ -11,34 +11,32 @@
             Welcome to admin comment
             <small>Author</small>
           </h1>
-         <?php
-        if(isset($_GET['source'])){
-          $source = $_GET['source'];
-        } else {
-          $source = '';
-        }
+          <?php
+          if (isset($_GET['source'])) {
+            $source = $_GET['source'];
+          } else {
+            $source = '';
+          }
+
+          switch ($source) {
+            case 'add_post':
+              include "includes/add_post.php";
+              break;
+
+            case 'edit_post':
+              include "includes/edit_post.php";
+              break;
+
+            case '300':
+              echo "Nice 300";
+              break;
 
 
-        switch($source){
-          case 'add_post': 
-           include "includes/add_post.php";
-          break;
+            default:
+              include "includes/view_all_comments.php";
+          }
 
-          case 'edit_post': 
-          include "includes/edit_post.php";
-          break;
-
-          case '300': 
-          echo "Nice 300";
-          break;
-
-        default: 
-        include "includes/view_all_comments.php";
-        }
-
-
-
-         ?>
+          ?>
         </div>
       </div>
       <!-- /.row -->
