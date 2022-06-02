@@ -6,7 +6,6 @@
 
     <!-- Page Content -->
     <div class="container">
-
         <div class="row">
 
             <!-- Blog Entries Column -->
@@ -25,12 +24,9 @@
                     $post_content = substr($row['post_content'], 0, 350);
                     $post_status = $row['post_status'];
                     if ($post_status !== 'published') {
-                        echo '<h1>Sorry No Posts</h1>';
                     } else {
 
-
                 ?>
-
 
                         <h1 class="page-header">
                             Page Heading
@@ -66,8 +62,5 @@
         <!-- /.row -->
 
         <hr>
-
-
-
 
         <?php include './includes/footer.php'  ?>
