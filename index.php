@@ -38,8 +38,11 @@
                             <a href="post.php?p_id=<?= $post_id ?>"><?= $post_title ?></a>
                         </h2>
                         <p class="lead">
-                            by <a href="index.php"><?= $post_author ?></a>
+                            by <a href="author_posts.php?author=<?=$post_author;?>&p_id=<?= $post_id; ?>"><?= $post_author ?></a>
                         </p>
+
+                     
+
                         <p><span class="glyphicon glyphicon-time"></span><?= $post_date ?></p>
                         <hr>
 
@@ -47,7 +50,7 @@
 
                         <hr>
                         <p><?= $post_content ?></p>
-                        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                        <a class="btn btn-primary" href="post.php?p_id=<?= $post_id ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                         <hr>
                 <?php }

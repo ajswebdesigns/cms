@@ -50,7 +50,12 @@ if (isset($_POST['update_post'])) {
 
     $update_post = mysqli_query($connection, $query);
 
-    confirmQuery($update_post);
+    confirmQuery($update_post); ?>
+    <div class="alert alert-success" role="alert">
+        Post Updated
+    <a href="../post.php?p_id=<?= $post_id?>">View Post</a>
+    </div>
+    <?php
 }
 
 ?>
@@ -77,7 +82,6 @@ if (isset($_POST['update_post'])) {
             }
             ?>
 
-
         </select>
     </div>
 
@@ -85,10 +89,25 @@ if (isset($_POST['update_post'])) {
         <label for="author">Post Author</label>
         <input value="<?php echo $post_author; ?>" type="text" class="form-control" name="post_author">
     </div>
+
     <div class="form-group">
-        <label for="post_status">Post Status</label>
-        <input value="<?php echo $post_status; ?>" type="text" class="form-control" name="post_status">
+        <select name="post_status" id="">
+            <option value="<?=$post_status;?>"><?= $post_status;?></option>
+            <?php 
+            if($post_status === 'published') { ?>
+                <option value="draft">Draft</option>
+            <?php } else { ?>
+                <option value="published">Publish</option>
+            <?php  } ?>
+        </select>
     </div>
+    
+
+
+    <!-- <div class="form-group">
+        <label for="post_status">Post Status</label>
+        <input value="" type="text" class="form-control" name="post_status">
+    </div> -->
 
     <div class="form-group">
         <img width="100" src="../images/<?php echo $post_image; ?>" alt="" name="post_image">
@@ -102,9 +121,8 @@ if (isset($_POST['update_post'])) {
 
     <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control" name="post_content" id="" cols="30" rows="10">
-          <?php echo $post_content; ?>
-      </textarea>
+        <textarea class="form-control" name="post_content" id="summernote" cols="30" rows="10"><?php echo $post_content;?>
+        </textarea>
     </div>
     <div class="form-group">
         <input type="submit" class="btn btn-primary" name="update_post" value="Update Post">

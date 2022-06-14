@@ -27,9 +27,9 @@
               include "includes/edit_post.php";
               break;
 
-            case '300':
-              echo "Nice 300";
-              break;
+            // case '300':
+            //   echo "Nice 300";
+            //   break;
 
             default:
               include "includes/view_all_posts.php";

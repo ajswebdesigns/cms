@@ -42,7 +42,12 @@ if(isset($_POST['create_post'])){
 
 
 
-    $create_post_query = mysqli_query($connection, $query);
+    $create_post_query = mysqli_query($connection, $query);?>
+    $the_post_id = mysqli_insert_id($connection);
+      <div class="alert alert-success" role="alert">
+    Post Sucessfully Added! 
+    </div>
+    <?php 
 
 
 
@@ -97,9 +102,16 @@ if(isset($_POST['create_post'])){
 
 <!-- Post Status -->
 <div class="form-group">
-  <label for="post_status">Post Status</label>
-  <input id="post_status" type="text" class="form-control" name="post_status">
+  <!-- <label for="post_status">Post Status</label> -->
+
+  <select name="post_status" id="">
+    <option value="draft">Post Status</option>
+    <option value="published">Published</option>
+    <option value="draft">Draft</option>
+  </select>
+  <!-- <input id="post_status" type="text" class="form-control" name="post_status"> -->
 </div>
+
 
 <!-- Post Image -->
 <div class="form-group">
@@ -115,8 +127,8 @@ if(isset($_POST['create_post'])){
 
 <!-- Post Content -->
 <div class="form-group">
-  <label for="post_content">Post Content</label>
-  <textarea id="post_content" class="form-control" name="post_content" id="" cols="30" rows="10"></textarea>
+  <label for="summernote">Post Content</label>
+  <textarea id="summernote" class="form-control" name="post_content" id="" cols="30" rows="10"></textarea>
 </div>
 
 <!-- Submit Form -->
@@ -125,3 +137,6 @@ if(isset($_POST['create_post'])){
 </div>
 
 </form>
+
+
+

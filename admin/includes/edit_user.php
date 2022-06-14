@@ -50,7 +50,15 @@ if (isset($_POST['edit_user'])) {
 
   // move_uploaded_file($post_image_tmp, "../images/$post_image");
 
+$query = "SELECT randSalt FROM users";
+$select_randsalt_query = mysqli_query($connection,$query);
+if(!$select_randsalt_query){
+  die("Query Failed" . mysqli_error($connection));
+}
 
+$row = mysqli_fetch_array($select_randsalt_query);
+$salt = $row['randSalt'];
+$hashed_password = crypt($user_password, $salt);
 
   $query = "UPDATE users set ";
 
@@ -74,7 +82,7 @@ if (isset($_POST['edit_user'])) {
 
 
 
-  $query .= "user_password = '{$user_password}' ";
+  $query .= "user_password = '{$hashed_password}' ";
 
 
 
@@ -118,7 +126,7 @@ if (isset($_POST['edit_user'])) {
 
 
 
-      <option value="suscriber"><?php echo $user_role;  ?></option>
+      <option value="<?php echo $user_role; ?> "><?php echo $user_role;  ?></option>
 
       <?php
 

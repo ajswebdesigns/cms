@@ -10,7 +10,7 @@
                    <div class="row">
                        <div class="col-lg-12">
                            <h1 class="page-header">
-                               Welcome to ADMIN
+                               Welcome
 
 
                                <small> <?php echo  $_SESSION['username']; ?></small>
@@ -138,6 +138,14 @@
                    <!-- /.row -->
 
                    <?php
+               
+
+
+
+                    $query = "SELECT * FROM posts WHERE post_status = 'published' ";
+                    $select_all_published_post = mysqli_query($connection, $query);
+                    $post_published_count = mysqli_num_rows($select_all_published_post);
+
 
                     $query = "SELECT * FROM posts WHERE post_status = 'draft' ";
                     $select_all_draft_post = mysqli_query($connection, $query);
@@ -167,8 +175,8 @@
                                var data = google.visualization.arrayToDataTable([
                                    ['Data', 'Count'],
                                    <?php
-                                    $element_text = ['Active Posts', 'Draft', 'Subscribers', 'Unapproved Comments', 'Comments', 'Users', 'Categories'];
-                                    $element_count = [$post_counts, $post_draft_count, $subscriber_count, $unapproved_comment_count, $comment_counts, $user_count, $categories_count];
+                                    $element_text = ['All Posts','Active Posts', 'Draft', 'Subscribers', 'Unapproved Comments', 'Comments', 'Users', 'Categories'];
+                                    $element_count = [$post_counts, $post_published_count, $post_draft_count, $subscriber_count, $unapproved_comment_count, $comment_counts, $user_count, $categories_count];
                                     for ($i = 0; $i < count($element_text); $i++) {
                                         echo "['$element_text[$i]'" . " ," . "$element_count[$i]],";
                                     }
@@ -197,3 +205,4 @@
            <!-- /#page-wrapper -->
            <!--  Footer -->
            <?php include('./includes/admin_footer.php') ?>
+
