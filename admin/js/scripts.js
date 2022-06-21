@@ -4,8 +4,6 @@ $(document).ready(function() {
   });
 });
 
-
-
 $(document).ready(function(){
  $('#selectAllBoxes').click(function(event){
    if(this.checked) {
@@ -30,6 +28,12 @@ $('#load-screen').delay(300).fadeOut(200,function(){
 })
 
 
-
-
+function loadUsersOnline() {
+    $.get("functions.php?onlineusers=result", function(data){
+        $(".usersonline").text(data);
+    });
+}
+setInterval(function(){
+    loadUsersOnline();
+},500);
 

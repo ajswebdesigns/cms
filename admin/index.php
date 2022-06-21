@@ -1,7 +1,6 @@
        <!-- Header -->
        <?php include('./includes/admin_header.php') ?>
        <div id="wrapper">
-
            <!-- Navigation -->
            <?php include('./includes/admin_navigation.php') ?>
            <div id="page-wrapper">
@@ -138,7 +137,7 @@
                    <!-- /.row -->
 
                    <?php
-               
+
 
 
 
@@ -163,7 +162,7 @@
                     $subscriber_count = mysqli_num_rows($select_all_subscribers);
 
                     ?>
-                    
+
                    <div class="row">
                        <script type="text/javascript">
                            google.charts.load('current', {
@@ -175,7 +174,7 @@
                                var data = google.visualization.arrayToDataTable([
                                    ['Data', 'Count'],
                                    <?php
-                                    $element_text = ['All Posts','Active Posts', 'Draft', 'Subscribers', 'Unapproved Comments', 'Comments', 'Users', 'Categories'];
+                                    $element_text = ['All Posts', 'Active Posts', 'Draft', 'Subscribers', 'Unapproved Comments', 'Comments', 'Users', 'Categories'];
                                     $element_count = [$post_counts, $post_published_count, $post_draft_count, $subscriber_count, $unapproved_comment_count, $comment_counts, $user_count, $categories_count];
                                     for ($i = 0; $i < count($element_text); $i++) {
                                         echo "['$element_text[$i]'" . " ," . "$element_count[$i]],";
@@ -205,4 +204,3 @@
            <!-- /#page-wrapper -->
            <!--  Footer -->
            <?php include('./includes/admin_footer.php') ?>
-
