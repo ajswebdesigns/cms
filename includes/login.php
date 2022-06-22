@@ -28,15 +28,12 @@ if (isset($_POST['login'])) {
     $db_user_lastname = $row['user_lastname'];
     $db_user_role = $row['user_role'];
   }
-  $password = crypt($password, $db_user_password); //the function crypt will compare the encrypted password with the
+  // $password = crypt($password, $db_user_password); //the function crypt will compare the encrypted password with the
   // help of randSalt with the password that the user enter(refers registration page)
 
 
 
-  if ($username === $db_username && $password === $db_user_password) {
-    // === means identical 
-    //if it is identical then 
-    //setting up session
+  if (password_verify($password,$db_user_password)) {
     $_SESSION['username'] = $db_username;
     $_SESSION['firstname'] = $db_user_firstname;
     $_SESSION['lastname'] = $db_user_lastname;
