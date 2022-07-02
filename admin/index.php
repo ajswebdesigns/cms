@@ -10,8 +10,6 @@
                        <div class="col-lg-12">
                            <h1 class="page-header">
                                Welcome
-
-
                                <small> <?php echo  $_SESSION['username']; ?></small>
                            </h1>
                        </div>
@@ -27,14 +25,12 @@
                                        <div class="col-xs-3">
                                            <i class="fa fa-file-text fa-5x"></i>
                                        </div>
+
                                        <div class="col-xs-9 text-right">
+
                                            <!-- Post Widget Query -->
-                                           <?php
-                                            $query = "SELECT * FROM posts";
-                                            $select_all_posts = mysqli_query($connection, $query);
-                                            $post_counts =  mysqli_num_rows($select_all_posts); ?>
-                                           <div class='huge'><?= $post_counts; ?></div> <?php
-                                                                                        ?>
+                                           <?php $post_counts =  recordCount('posts'); ?>
+                                           <div class='huge'><?= $post_counts; ?></div>
                                            <div>Posts</div>
                                        </div>
                                    </div>
@@ -58,12 +54,8 @@
                                        <div class="col-xs-9 text-right">
 
                                            <!-- Comments Widget Query -->
-                                           <?php
-                                            $query = "SELECT * FROM comments";
-                                            $select_all_comments = mysqli_query($connection, $query);
-                                            $comment_counts =  mysqli_num_rows($select_all_comments); ?>
-                                           <div class='huge'><?= $comment_counts; ?></div> <?php
-                                                                                            ?>
+                                           <?php $comment_counts =  recordCount('comments'); ?>
+                                           <div class='huge'><?= $comment_counts; ?></div>
                                            <div>Comments</div>
                                        </div>
                                    </div>
@@ -86,12 +78,8 @@
                                        </div>
                                        <div class="col-xs-9 text-right">
                                            <!-- Users Widget Query -->
-                                           <?php
-                                            $query = "SELECT * FROM users ";
-                                            $select_all_users = mysqli_query($connection, $query);
-                                            $user_count = mysqli_num_rows($select_all_users); ?>
-                                           <div class='huge'><?= $user_count; ?></div><?php
-                                                                                        ?>
+                                           <?php $user_count =  recordCount('users'); ?>
+                                           <div class='huge'><?= $user_count; ?></div>
                                            <div> Users</div>
                                        </div>
                                    </div>
@@ -114,12 +102,8 @@
                                        </div>
                                        <div class="col-xs-9 text-right">
                                            <!-- Categories Widget Count Query -->
-                                           <?php
-                                            $query = "SELECT * FROM categories ";
-                                            $select_all_categories = mysqli_query($connection, $query);
-                                            $categories_count = mysqli_num_rows($select_all_categories); ?>
-                                           <div class='huge'><?= $categories_count; ?></div> <?php
-                                                                                                ?>
+                                           <?php $categories_count =  recordCount('categories'); ?>
+                                           <div class='huge'><?= $categories_count; ?></div>
                                            <div>Categories</div>
                                        </div>
                                    </div>
@@ -137,29 +121,14 @@
                    <!-- /.row -->
 
                    <?php
+                    $post_published_count = checkStatus('posts', 'post_status', 'published');
 
-
-
-
-                    $query = "SELECT * FROM posts WHERE post_status = 'published' ";
-                    $select_all_published_post = mysqli_query($connection, $query);
-                    $post_published_count = mysqli_num_rows($select_all_published_post);
-
-
-                    $query = "SELECT * FROM posts WHERE post_status = 'draft' ";
-                    $select_all_draft_post = mysqli_query($connection, $query);
-                    $post_draft_count = mysqli_num_rows($select_all_draft_post);
-
-
-                    $query = "SELECT * FROM comments WHERE comment_status = 'unapproved' ";
-                    $unapproved_comments_query = mysqli_query($connection, $query);
-                    $unapproved_comment_count = mysqli_num_rows($unapproved_comments_query);
-
-
-
-                    $query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
-                    $select_all_subscribers = mysqli_query($connection, $query);
-                    $subscriber_count = mysqli_num_rows($select_all_subscribers);
+                    $post_draft_count = checkStatus('posts', 'post_status', 'draft');
+                    
+                    $unapproved_comment_count = checkStatus('comments', 'comment_status', 'unapproved');
+                    
+                    $subscriber_count = checkUserRole('users', 'user_role', 'subscriber');
+                 
 
                     ?>
 

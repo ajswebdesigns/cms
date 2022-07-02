@@ -45,3 +45,5 @@
   <!-- /#page-wrapper -->
   <!--  Footer -->
   <?php include('includes/admin_footer.php') ?>
+
+

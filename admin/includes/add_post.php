@@ -6,13 +6,14 @@ if(isset($_POST['create_post'])){
 
 
 
-  $post_title = $_POST['title'];
+  $post_title = escape($_POST['title']);
+  $post_user = escape($_POST['post_user']);
 
-  $post_author = $_POST['author'];
+  $post_author = escape($_POST['author']);
 
-  $post_category_id = $_POST['post_category'];
+  $post_category_id = escape($_POST['post_category']);
 
-  $post_status = $_POST['post_status'];
+  $post_status = escape($_POST['post_status']);
 
 
 
@@ -22,11 +23,11 @@ if(isset($_POST['create_post'])){
 
 
 
-  $post_tags = $_POST['post_tags'];
+  $post_tags = escape($_POST['post_tags']);
 
-  $post_content = $_POST['post_content'];
+  $post_content = escape($_POST['post_content']);
 
-  $post_date = date('Y-m-d');
+  $post_date = escape(date('Y-m-d'));
 
   // $post_comment_count = 4;
 
@@ -80,8 +81,8 @@ if(isset($_POST['create_post'])){
             $select_categories = mysqli_query($connection,$query); 
 //            confirmQuery($select_categories);
                 while($row = mysqli_fetch_assoc($select_categories)){
-                    $cat_id = $row['cat_id'];
-                    $cat_title = $row['cat_title'];
+                    $cat_id = escape($row['cat_id']);
+                    $cat_title = escape($row['cat_title']);
                     
                     echo "<option value='{$cat_id}'>$cat_title</option>";
                 
@@ -94,11 +95,38 @@ if(isset($_POST['create_post'])){
    </div>
    
 
-<!-- Post Author -->
+
+
+
 <div class="form-group">
+  <label for="">Users</label>
+    <select name="post_category" id="post_category">
+        
+        <?php
+            $users_query = "SELECT * FROM  users";
+            $select_users = mysqli_query($connection,$users_query); 
+//            confirmQuery($select_categories);
+                while($row = mysqli_fetch_assoc($select_users)){
+                    $user_id = $row['user_id'];
+                    $username= $row['username'];
+                    
+                    echo "<option value='{$user_id}'>$username</option>";
+                   
+                
+                }
+        ?>
+        
+        
+        
+    </select>
+   </div>
+
+
+<!-- Post Author -->
+<!-- <div class="form-group">
   <label for="title">Post Author</label>
   <input id="title" type="text" class="form-control" name="author">
-</div>
+</div> -->
 
 <!-- Post Status -->
 <div class="form-group">

@@ -20,8 +20,20 @@
                $view_query = "UPDATE posts SET post_views_count = post_views_count +1 WHERE post_id =$the_post_id ";
                $send_query = mysqli_query($connection,$view_query);
 
-                $query = "SELECT * FROM posts WHERE post_id = {$the_post_id}";
+if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){
+  $query = "SELECT * FROM posts WHERE post_id = {$the_post_id}";
+} else {
+      $query = "SELECT * FROM posts WHERE post_id = {$the_post_id} AND post_status = 'published'";
+}
+
                 $select_all_posts_query = mysqli_query($connection, $query);
+                if(mysqli_num_rows($select_all_posts_query)<1 ) {
+                    echo 'No Posts Available';
+                } else {
+
+
+
+                
                 while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                     // var_dump($row);
                     $post_title = $row['post_title'];
@@ -51,7 +63,7 @@
                     <!-- <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a> -->
 
                     <hr>
-                <?php } } else {
+                <?php }} } else {
                     header('Location: index.php');
                 }
 
@@ -74,9 +86,12 @@
                         }
 
 
-                        $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                        $query .= "WHERE post_id = $the_post_id ";
-                        $update_comment_count = mysqli_query($connection, $query);
+                        // $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                        // $query .= "WHERE post_id = $the_post_id ";
+                        // $update_comment_count = mysqli_query($connection, $query);
+
+
+                        
                     } else {
                         echo "<script>alert('Fields Cannot Be Empty')</script>";
                     }

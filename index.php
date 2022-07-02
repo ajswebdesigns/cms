@@ -29,9 +29,16 @@
                     $page_1 = ($page * $per_page) - $per_page;
                 }
                 // Need to find out how many posts that we have currently on the website
-                $post_query_count = "SELECT * FROM posts";
+                $post_query_count = "SELECT * FROM posts WHERE post_status = 'published'";
                 $find_count = mysqli_query($connection, $post_query_count);
                 $count = mysqli_num_rows($find_count);
+                if($count < 1){
+                    echo 'no posts';
+                } else {
+
+
+
+                
 
                 $count =  ceil($count / $per_page);
                 // echo $count;
@@ -76,8 +83,9 @@
                         <a class="btn btn-primary" href="post.php?p_id=<?= $post_id ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                         <hr>
-                <?php }
-                } ?>
+
+                <?php }  
+ }} ?>
 
             </div>
 

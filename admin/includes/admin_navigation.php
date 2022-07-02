@@ -69,6 +69,9 @@
                     <li>
                         <a href="profile.php"><i class="fa fa-fw fa-wrench"></i> Profile</a>
                     </li>
+                     <li>
+                        <a href="./includes/contact_submissions.php"><i class="fa fa-fw fa-envelope"></i> Contact Form Submission</a>
+                    </li>
                 </ul>
             </div>
 
