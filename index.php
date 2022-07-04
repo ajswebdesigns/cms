@@ -66,7 +66,7 @@
                         <!-- First Blog Post -->
 
                         <h2>
-                            <a href="post.php?p_id=<?= $post_id ?>"><?= $post_title ?></a>
+                            <a href="post/<?= $post_id ?>"><?= $post_title ?></a>
                         </h2>
                         <p class="lead">
                             by <a href="author_posts.php?author=<?= $post_author; ?>&p_id=<?= $post_id; ?>"><?= $post_author ?></a>

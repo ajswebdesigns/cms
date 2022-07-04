@@ -1,10 +1,11 @@
 <?php
-
+// Escape Function
 function escape($string){
   global $connection;
 return mysqli_real_escape_string($connection,trim($string));
 }
 
+// Users Online Function
 function users_online() {
     if(isset($_GET['onlineusers'])) {
         global $connection;
@@ -30,7 +31,7 @@ function users_online() {
     } // get request isset()
 }
 users_online();
-
+// Confirm Query
 function confirmQuery($result)
 {
   global $connection;
@@ -166,9 +167,33 @@ function email_exists($email) {
   }
 }
 
-
+// Redirect Function
 function redirect($location){
-  return header('Location'. $location);
+   header('Location'. $location);
+   exit;
+}
+
+
+function ifItIsMethod($method=null){
+  if($_SERVER['REQUEST_METHOD'] == strtoupper($method)){
+    return true;
+  }
+  return false;
+}
+
+// Check if user is logged in 
+function isLoggedIn(){
+  if(isset($_SESSION['user_role'])){
+    return true;
+  }
+  return false;
+}
+
+// Logged In And Redirect Function
+function checkIfUserIsLoggedInAndRedirect($redirectLocation=null){
+  if(isLoggedIn()){
+    redirect($redirectLocation);
+  }
 }
 
 function register_user($username, $email, $password)
@@ -214,19 +239,20 @@ function login_user($username, $password)
     $db_user_firstname = $row['user_firstname'];
     $db_user_lastname = $row['user_lastname'];
     $db_user_role = $row['user_role'];
+
+	  if (password_verify($password,$db_user_password)) {
+		  $_SESSION['username'] = $db_username;
+		  $_SESSION['firstname'] = $db_user_firstname;
+		  $_SESSION['lastname'] = $db_user_lastname;
+		  $_SESSION['user_role'] = $db_user_role;
+		  header("Location: ../admin ");
+	  } else {
+		  header("Location: ../index.php");
+	  }
+  }
   }
   // $password = crypt($password, $db_user_password); //the function crypt will compare the encrypted password with the
   // help of randSalt with the password that the user enter(refers registration page)
 
 
 
-  if (password_verify($password,$db_user_password)) {
-    $_SESSION['username'] = $db_username;
-    $_SESSION['firstname'] = $db_user_firstname;
-    $_SESSION['lastname'] = $db_user_lastname;
-    $_SESSION['user_role'] = $db_user_role;
-    header("Location: ../admin ");
-  } else {
-    header("Location: ../index.php");
-  }
-}
