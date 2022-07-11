@@ -1,8 +1,8 @@
        <!-- Header -->
-       <?php include('./includes/admin_header.php') ?>
+       <?php include './includes/admin_header.php'?>
        <div id="wrapper">
            <!-- Navigation -->
-           <?php include('./includes/admin_navigation.php') ?>
+           <?php include './includes/admin_navigation.php'?>
            <div id="page-wrapper">
                <div class="container-fluid">
                    <!-- Page Heading -->
@@ -10,7 +10,7 @@
                        <div class="col-lg-12">
                            <h1 class="page-header">
                                Welcome
-                               <small> <?php echo  $_SESSION['username']; ?></small>
+                               <small> <?php echo $_SESSION['username']; ?></small>
                            </h1>
                        </div>
                    </div>
@@ -29,8 +29,8 @@
                                        <div class="col-xs-9 text-right">
 
                                            <!-- Post Widget Query -->
-                                           <?php $post_counts =  recordCount('posts'); ?>
-                                           <div class='huge'><?= $post_counts; ?></div>
+                                           <?php $post_counts = recordCount('posts');?>
+                                           <div class='huge'><?=$post_counts;?></div>
                                            <div>Posts</div>
                                        </div>
                                    </div>
@@ -54,8 +54,8 @@
                                        <div class="col-xs-9 text-right">
 
                                            <!-- Comments Widget Query -->
-                                           <?php $comment_counts =  recordCount('comments'); ?>
-                                           <div class='huge'><?= $comment_counts; ?></div>
+                                           <?php $comment_counts = recordCount('comments');?>
+                                           <div class='huge'><?=$comment_counts;?></div>
                                            <div>Comments</div>
                                        </div>
                                    </div>
@@ -78,8 +78,8 @@
                                        </div>
                                        <div class="col-xs-9 text-right">
                                            <!-- Users Widget Query -->
-                                           <?php $user_count =  recordCount('users'); ?>
-                                           <div class='huge'><?= $user_count; ?></div>
+                                           <?php $user_count = recordCount('users');?>
+                                           <div class='huge'><?=$user_count;?></div>
                                            <div> Users</div>
                                        </div>
                                    </div>
@@ -102,8 +102,8 @@
                                        </div>
                                        <div class="col-xs-9 text-right">
                                            <!-- Categories Widget Count Query -->
-                                           <?php $categories_count =  recordCount('categories'); ?>
-                                           <div class='huge'><?= $categories_count; ?></div>
+                                           <?php $categories_count = recordCount('categories');?>
+                                           <div class='huge'><?=$categories_count;?></div>
                                            <div>Categories</div>
                                        </div>
                                    </div>
@@ -121,16 +121,15 @@
                    <!-- /.row -->
 
                    <?php
-                    $post_published_count = checkStatus('posts', 'post_status', 'published');
+$post_published_count = checkStatus('posts', 'post_status', 'published');
 
-                    $post_draft_count = checkStatus('posts', 'post_status', 'draft');
-                    
-                    $unapproved_comment_count = checkStatus('comments', 'comment_status', 'unapproved');
-                    
-                    $subscriber_count = checkUserRole('users', 'user_role', 'subscriber');
-                 
+$post_draft_count = checkStatus('posts', 'post_status', 'draft');
 
-                    ?>
+$unapproved_comment_count = checkStatus('comments', 'comment_status', 'unapproved');
+
+$subscriber_count = checkUserRole('users', 'user_role', 'subscriber');
+
+?>
 
                    <div class="row">
                        <script type="text/javascript">
@@ -143,12 +142,12 @@
                                var data = google.visualization.arrayToDataTable([
                                    ['Data', 'Count'],
                                    <?php
-                                    $element_text = ['All Posts', 'Active Posts', 'Draft', 'Subscribers', 'Unapproved Comments', 'Comments', 'Users', 'Categories'];
-                                    $element_count = [$post_counts, $post_published_count, $post_draft_count, $subscriber_count, $unapproved_comment_count, $comment_counts, $user_count, $categories_count];
-                                    for ($i = 0; $i < count($element_text); $i++) {
-                                        echo "['$element_text[$i]'" . " ," . "$element_count[$i]],";
-                                    }
-                                    ?>
+$element_text = ['All Posts', 'Active Posts', 'Draft', 'Subscribers', 'Unapproved Comments', 'Comments', 'Users', 'Categories'];
+$element_count = [$post_counts, $post_published_count, $post_draft_count, $subscriber_count, $unapproved_comment_count, $comment_counts, $user_count, $categories_count];
+for ($i = 0; $i < count($element_text); $i++) {
+    echo "['$element_text[$i]'" . " ," . "$element_count[$i]],";
+}
+?>
                                    //    ['Posts', 1000],
 
                                ]);
@@ -172,4 +171,4 @@
            </div>
            <!-- /#page-wrapper -->
            <!--  Footer -->
-           <?php include('./includes/admin_footer.php') ?>
+           <?php include './includes/admin_footer.php'?>

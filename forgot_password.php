@@ -1,126 +1,18 @@
-
-This site has been acquired by Toptal
-(Attention! API endpoint has changed)
-Save New Duplicate & Edit Just Text1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
 <?php include "./includes/db.php";?>
 <?php include "includes/header.php";?>
 
 <?php //require "./vendor/phpmailer/phpmailer/PHPMailerAutoload.php"?>
 <?php require './vendor/autoload.php';?>
+
+
+
 <?php require "./admin/classes/Config.php"?>
+
 
 <?php require_once "./admin/functions.php"?>
 <?php
 
-if (!ifItIsMethod('get') && !isset($_GET['forgot)'])) {
+if (!isset($_GET['forgot)'])) {
 //    header("Location: index");
 }
 if (ifItIsMethod('post')) {
@@ -137,7 +29,7 @@ if (ifItIsMethod('post')) {
         mysqli_stmt_close($stmt);
 //        Configure PHPMailer
         $mail = new PHPMailer();
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
         $mail->isSMTP(); //Send using SMTP
         $mail->Host = Config::SMTP_HOST; //Set the SMTP server to send through
         $mail->SMTPAuth = true; //Enable SMTP authentication
@@ -147,12 +39,19 @@ if (ifItIsMethod('post')) {
         $mail->Port = Config::SMTP_PORT; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         $mail->isHTML(true);
+        $mail->CharSet = 'UTF-8';
         $mail->setFrom('Andrew@damitdams.com');
         $mail->addAddress($email);
         $mail->Subject = 'This is a test';
-        $mail->Body = 'And this is the email body';
+        $mail->Body = '<p>Please Click to reset your password
+        <a href="http://localhost:8888/forgot_password.php?email=' . $email . '&token=' . $token . '">http://localhost:8888/forgot_password.php?email=' . $email . '&token=' . $token . '
+        </a>
+
+
+        </p>';
+
         if ($mail->send()) {
-            echo 'it was sent';
+            $emailSent = true;
         } else {
             echo 'it was not sent';
         }
@@ -164,9 +63,6 @@ if (ifItIsMethod('post')) {
 
 ?>
 
-
-
-
 <!-- Page Content -->
 <div class="container">
 
@@ -177,6 +73,8 @@ if (ifItIsMethod('post')) {
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="text-center">
+                        <?php if (!isset($emailSent)): ?>
+
 
 
 							<h3><i class="fa fa-lock fa-4x"></i></h3>
@@ -203,6 +101,10 @@ if (ifItIsMethod('post')) {
 								</form>
 
 							</div><!-- Body-->
+                             <?php else: ?>
+                                <h2>Please check your email!</h2>
+                                <p>Reset link is only valid for 30 minutes</p>
+                            <?php endif;?>
 
 						</div>
 					</div>
