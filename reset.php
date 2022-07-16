@@ -8,6 +8,7 @@
 // if (!isset($_GET['email']) && !isset($_GET['token'])) {
 //     redirect('index.php');
 // }
+
 $token = '19a8bdcdb28869ecfc7a60845b4d54b7415830af37eb07f248516cd1fdc1ceff2edc2bb655915a29be1717b60927e1e4f106';
 
 if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM users WHERE token=?')) {
@@ -20,13 +21,24 @@ if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM
     // if ($_GET['token'] !== $token || $_GET['email'] !== $email) {
     //     redirect('index');
     // }
+
+    if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
+        $newPassword = $_POST['password'];
+        $confirmPassword = $_POST['confirmPassword'];
+        if ($newPassword === $confirmPassword) {
+            echo 'they are the same';
+        } else {
+            echo 'they are not the same';
+        }
+    }
 }
 
 ?>
 <!-- Page Content -->
 <div class="container">
 
-    <div class="form-gap"></div>
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
@@ -34,29 +46,37 @@ if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM
                     <div class="panel-body">
                         <div class="text-center">
 
-                                <h3><i class="fa fa-lock fa-4x"></i></h3>
-                                <h2 class="text-center">Forgot Password?</h2>
-                                <p>You can reset your password here.</p>
-                                <div class="panel-body">
 
-                                    <form id="register-form" role="form" autocomplete="off" class="form" method="post">
+                            <h3><i class="fa fa-lock fa-4x"></i></h3>
+                            <h2 class="text-center">Reset Password</h2>
+                            <p>You can reset your password here.</p>
+                            <div class="panel-body">
 
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                                <input id="email" name="email" placeholder="email address" class="form-control"  type="email">
-                                            </div>
+
+                                <form id="register-form" role="form" autocomplete="off" class="form" method="post">
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue"></i></span>
+                                            <input id="password" name="password" placeholder="Enter password" class="form-control"  type="password">
                                         </div>
-                                        <div class="form-group">
-                                            <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Reset Password" type="submit">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok color-blue"></i></span>
+                                            <input id="confirmPassword" name="confirmPassword" placeholder="Confirm password" class="form-control"  type="password">
                                         </div>
+                                    </div>
 
-                                        <input type="hidden" class="hide" name="token" id="token" value="">
-                                    </form>
+                                    <div class="form-group">
+                                        <input name="resetPassword" class="btn btn-lg btn-primary btn-block" value="Reset Password" type="submit">
+                                    </div>
 
-                                </div><!-- Body-->
+                                    <input type="hidden" class="hide" name="token" id="token" value="">
+                                </form>
 
-                                <h2>Please check your email</h2>
+                            </div><!-- Body-->
 
                         </div>
                     </div>
@@ -66,7 +86,7 @@ if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM
     </div>
 
 
-    <hr>
+<hr>
 
     <?php include "./includes/footer.php";?>
 
