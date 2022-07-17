@@ -5,14 +5,17 @@
 
 
 <?php
-// if (!isset($_GET['email']) && !isset($_GET['token'])) {
-//     redirect('index.php');
-// }
+$verified = false;
 
-$token = '19a8bdcdb28869ecfc7a60845b4d54b7415830af37eb07f248516cd1fdc1ceff2edc2bb655915a29be1717b60927e1e4f106';
+if (!isset($_GET['email']) && !isset($_GET['token'])) {
+    redirect('index.php');
+}
+
+// $email = 'admin@gmail.com';
+// $token = '19a8bdcdb28869ecfc7a60845b4d54b7415830af37eb07f248516cd1fdc1ceff2edc2bb655915a29be1717b60927e1e4f106';
 
 if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM users WHERE token=?')) {
-    mysqli_stmt_bind_param($stmt, "s", $token);
+    mysqli_stmt_bind_param($stmt, "s", $_GET['token']);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $username, $user_email, $token);
     mysqli_stmt_fetch($stmt);
@@ -21,14 +24,19 @@ if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM
     // if ($_GET['token'] !== $token || $_GET['email'] !== $email) {
     //     redirect('index');
     // }
-
-    if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
-        $newPassword = $_POST['password'];
-        $confirmPassword = $_POST['confirmPassword'];
-        if ($newPassword === $confirmPassword) {
-            echo 'they are the same';
-        } else {
-            echo 'they are not the same';
+}
+if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
+    if ($_POST['password'] === $_POST['confirmPassword']) {
+        $password = $_POST['password'];
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+        if ($stmt = mysqli_prepare($connection, "UPDATE users SET token='', user_password= '{$hashedPassword}' WHERE user_email = ? ")) {
+            mysqli_stmt_bind_param($stmt, 's', $_GET['email']);
+            mysqli_stmt_execute($stmt);
+            if (mysqli_stmt_affected_rows($stmt) >= 1) {
+                header("Location: login.php");
+            }
+            mysqli_stmt_close($stmt);
+            $verified = true;
         }
     }
 }
@@ -37,7 +45,7 @@ if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM
 <!-- Page Content -->
 <div class="container">
 
-
+<?php if (!$verified): ?>
 
     <div class="container">
         <div class="row">
@@ -84,6 +92,8 @@ if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM
             </div>
         </div>
     </div>
+
+<?php endif;?>
 
 
 <hr>

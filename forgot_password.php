@@ -44,7 +44,7 @@ if (ifItIsMethod('post')) {
         $mail->addAddress($email);
         $mail->Subject = 'This is a test';
         $mail->Body = '<p>Please Click to reset your password
-        <a href="http://localhost:8888/forgot_password.php?email=' . $email . '&token=' . $token . '">http://localhost:8888/forgot_password.php?email=' . $email . '&token=' . $token . '
+        <a href="http://localhost:8888/reset.php?email=' . $email . '&token=' . $token . '">http://localhost:8888/reset.php?email=' . $email . '&token=' . $token . '
         </a>
 
 
