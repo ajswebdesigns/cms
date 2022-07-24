@@ -5,7 +5,11 @@
     <?php include './includes/navigation.php'?>
 <?php
 if (isset($_POST['liked'])) {
-    echo 'it works';
+    // 1). Select Post
+
+    // 2). Update Post With Likes
+
+    // 3. Create Likes For Post
 }
 
 ?>
