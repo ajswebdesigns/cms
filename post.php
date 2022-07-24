@@ -4,12 +4,63 @@
     <!-- Navigation -->
     <?php include './includes/navigation.php'?>
 <?php
+// Liking the post
 if (isset($_POST['liked'])) {
-    // 1). Select Post
 
-    // 2). Update Post With Likes
+    $post_id = $_POST['post_id'];
 
-    // 3. Create Likes For Post
+    $user_id = $_POST['user_id'];
+
+    //1 = FECTCHING THE RIGHT POST
+
+    $query = "SELECT * FROM posts WHERE post_id=$post_id";
+
+    $postResult = mysqli_query($connection, $query);
+
+    $postRequest = mysqli_fetch_array($postResult);
+
+    $likes = $postRequest['likes'];
+
+    //2 = UPDATE- INCREMENTING WITH LIKES
+
+    mysqli_query($connection, "UPDATE posts SET likes=$likes +1 WHERE post_id=$post_id");
+
+    //3 = CREATE LIKES FOR POST
+
+    mysqli_query($connection, "INSERT INTO likes(user_id,post_id) VALUES($user_id,$post_id)");
+
+    exit();
+
+}
+
+// Unliking the post
+
+if (isset($_POST['unliked'])) {
+
+    $post_id = $_POST['post_id'];
+
+    $user_id = $_POST['user_id'];
+
+    //1 = FECTCHING THE RIGHT POST
+
+    $query = "SELECT * FROM posts WHERE post_id=$post_id";
+
+    $postResult = mysqli_query($connection, $query);
+
+    $postRequest = mysqli_fetch_array($postResult);
+
+    $likes = $postRequest['likes'];
+
+    //2 = UPDATE- INCREMENTING WITH LIKES
+
+    mysqli_query($connection, "UPDATE posts SET likes=$likes -1 WHERE post_id=$post_id");
+
+    //3 = CREATE LIKES FOR POST
+
+    mysqli_query($connection, "INSERT INTO likes(user_id,post_id) VALUES($user_id,$post_id)");
+
+    exit();
+
 }
 
 ?>
@@ -73,6 +124,9 @@ if (isset($_GET['p_id'])) {
 
                         <div class="row">
                             <p class="pull-right"><a class="like-btn" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
+                        </div>
+                        <div class="row">
+                            <p class="pull-right"><a class="unlike" href="#"><span class="glyphicon glyphicon-thumbs-down"></span> Unlike</a></p>
                         </div>
                           <div class="row">
                             <p class="pull-right">Like: 10</p>
@@ -175,36 +229,44 @@ while ($row = mysqli_fetch_array($select_comment_query)) {
         <hr>
         <?php include './includes/footer.php'?>
 <script>
+    var post_id = <?php echo $the_post_id; ?>;
+    var user_id = 3;
 
-  $(document).ready(function() {
-      //for use later . . .
-      var post_id = <?php echo $the_post_id; ?>;
-      //hardcoded #
-      var user_id = 94;
+    $(document).ready(function(){
+        // Like Post
+        $('.like-btn').click(function(){
+            $.ajax({
 
-    $('.like-btn').click(function() {
+                url: "post.php?p_id=<?php echo $the_post_id; ?>",
+                method: "POST",
+                data: {
+                    'liked': 1,
+                    'post_id': post_id,
+                    'user_id': user_id
 
-        //create AJAX function
-        $.ajax({
-          url: "post.php?p_id=<?php echo $the_post_id; ?>",
-          type: 'post',
-          data: {
-            liked: 1,
-            /* '' simply differentiate key from value;
-              'post_id' value for 'type:post' */
-            post_id: post_id,
-            // hardcoded user_id from var above
-            user_id: user_id
-          },
-          //see if successful . . .
-          success: function(data) {
-           alert(data);
-          }
-
+                }
+            });
         });
+
+
+        // Unliking Post
+            $('.unlike').click(function(){
+            $.ajax({
+
+                url: "post.php?p_id=<?php echo $the_post_id; ?>",
+                method: "POST",
+                data: {
+                    'unliked': 1,
+                    'post_id': post_id,
+                    'user_id': user_id
+
+                }
+            });
+        });
+
 
     });
 
-  });
+
 </script>
 
